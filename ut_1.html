@@ -3,58 +3,615 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cypress Selector Examples</title>
+    <title>Cypress DOM Querying Examples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .container { padding: 20px; margin: 10px; border: 1px solid #ccc; }
-        .btn { padding: 10px 15px; margin: 5px; border: none; cursor: pointer; }
-        .primary { background-color: #007bff; color: white; }
-        .secondary { background-color: #6c757d; color: white; }
-        .success { background-color: #28a745; color: white; }
-        .form-group { margin: 10px 0; }
-        label { display: block; margin-bottom: 5px; }
-        input { padding: 8px; width: 200px; }
+        :root {
+            --primary: #4361ee;
+            --secondary: #6c757d;
+            --success: #4cc9f0;
+            --dark: #3a0ca3;
+            --light: #f8f9fa;
+            --danger: #f72585;
+            --warning: #fca311;
+            --info: #4895ef;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #212529;
+            --border: #dee2e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .test-area {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
+        }
+
+        .test-area-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .test-area-header i {
+            font-size: 1.5rem;
+            margin-right: 12px;
+            color: var(--primary);
+        }
+
+        .test-area-header h2 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .test-content {
+            margin: 20px 0;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .primary { 
+            background: linear-gradient(to right, var(--primary), var(--info));
+            color: white;
+        }
+
+        .secondary { 
+            background: linear-gradient(to right, var(--secondary), #8a8a8a);
+            color: white;
+        }
+
+        .success { 
+            background: linear-gradient(to right, var(--success), var(--primary));
+            color: white;
+        }
+
+        .default {
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label i {
+            color: var(--primary);
+        }
+
+        input {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .item-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .item {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .special {
+            border-left-color: var(--success);
+            background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+        }
+
+        .nested-container {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .level-1, .level-2 {
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .level-1 {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .level-2 {
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .target-text {
+            font-weight: 600;
+            color: var(--success);
+            padding: 8px 15px;
+            background: white;
+            border-radius: 6px;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-sidebar {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            border: 1px solid var(--border);
+        }
+
+        .code-sidebar h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-sidebar h2 i {
+            color: var(--primary);
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        .code-example .comment {
+            color: #8292a2;
+        }
+
+        .code-example .method {
+            color: #f92672;
+        }
+
+        .code-example .selector {
+            color: #a6e22e;
+        }
+
+        .code-example .string {
+            color: #e6db74;
+        }
+
+        .code-example .function {
+            color: #66d9ef;
+        }
+
+        .test-btn {
+            margin-top: 15px;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .test-btn:hover {
+            background: var(--primary);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--light);
+            display: none;
+        }
+
+        .success-result {
+            border-left: 4px solid var(--success);
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .error-result {
+            border-left: 4px solid var(--danger);
+            background: rgba(247, 37, 133, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container" id="main-container">
-        <h1>Welcome to Cypress Testing</h1>
-        
-        <!-- Buttons with different classes and text -->
-        <div class="button-group">
-            <button class="btn primary" id="submit-btn">Submit</button>
-            <button class="btn secondary">Cancel</button>
-            <button class="btn success">Save Changes</button>
-            <button class="btn">Save</button>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Cypress DOM Querying Examples</h1>
+            <p class="subtitle">Interactive examples of Cypress DOM querying methods with visual feedback</p>
+        </header>
 
-        <!-- Form elements -->
-        <div class="form-container">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" data-testid="username-input">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-            </div>
-        </div>
+        <div class="dashboard">
+            <div class="test-area">
+                <div class="test-area-header">
+                    <i class="fas fa-code"></i>
+                    <h2>Test Elements</h2>
+                </div>
+                
+                <div class="test-content">
+                    <h3>Buttons</h3>
+                    <div class="button-group">
+                        <button class="btn primary" id="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                        <button class="btn secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button class="btn success">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button class="btn default">
+                            <i class="fas fa-download"></i> Save
+                        </button>
+                    </div>
 
-        <!-- List of items -->
-        <ul class="item-list">
-            <li class="item" data-id="1">Item 1</li>
-            <li class="item" data-id="2">Item 2</li>
-            <li class="item special" data-id="3">Special Item</li>
-            <li class="item" data-id="4">Item 4</li>
-        </ul>
+                    <h3>Form Elements</h3>
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i> Username:
+                            </label>
+                            <input type="text" id="username" name="username" data-testid="username-input" placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email:
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                    </div>
 
-        <!-- Nested elements -->
-        <div class="nested-container">
-            <div class="level-1">
-                <div class="level-2">
-                    <span class="target-text">Find me!</span>
+                    <h3>List Items</h3>
+                    <ul class="item-list">
+                        <li class="item" data-id="1">Item 1</li>
+                        <li class="item" data-id="2">Item 2</li>
+                        <li class="item special" data-id="3">Special Item</li>
+                        <li class="item" data-id="4">Item 4</li>
+                    </ul>
+
+                    <h3>Nested Elements</h3>
+                    <div class="nested-container">
+                        <div class="level-1">
+                            Level 1 Container
+                            <div class="level-2">
+                                Level 2 Container
+                                <span class="target-text">Find me!</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="code-sidebar">
+                <h2><i class="fas fa-terminal"></i> Cypress Query Examples</h2>
+                
+                <h3>1. cy.get(selector)</h3>
+                <div class="code-example">
+                    <span class="comment">// Select DOM elements by CSS selector</span><br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'.btn'</span>);<br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'#submit-btn'</span>);<br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'[data-testid="username-input"]'</span>);
+                </div>
+                <button class="test-btn" onclick="testGet()">Test cy.get()</button>
+                <div id="get-result" class="result"></div>
+
+                <h3>2. cy.contains(content)</h3>
+                <div class="code-example">
+                    <span class="comment">// Find elements containing specific text</span><br>
+                    <span class="function">cy</span>.<span class="method">contains</span>(<span class="string">'Submit'</span>);<br>
+                    <span class="function">cy</span>.<span class="method">contains</span>(<span class="string">'Special Item'</span>);<br><br>
+                    
+                    <span class="comment">// Scoped within an element</span><br>
+                    <span class="function">cy</span>.<span class="method">contains</span>(<span class="string">'.btn'</span>, <span class="string">'Save'</span>);
+                </div>
+                <button class="test-btn" onclick="testContains()">Test cy.contains()</button>
+                <div id="contains-result" class="result"></div>
+
+                <h3>3. cy.find(selector)</h3>
+                <div class="code-example">
+                    <span class="comment">// Find descendant elements within a parent</span><br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'.button-group'</span>).<span class="method">find</span>(<span class="string">'.btn'</span>);<br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'.nested-container'</span>).<span class="method">find</span>(<span class="string">'.target-text'</span>);
+                </div>
+                <button class="test-btn" onclick="testFind()">Test cy.find()</button>
+                <div id="find-result" class="result"></div>
+
+                <h3>4. cy.root()</h3>
+                <div class="code-example">
+                    <span class="comment">// Get the root DOM element</span><br>
+                    <span class="function">cy</span>.<span class="method">root</span>();<br>
+                    <span class="comment">// Typically used with .within()</span><br>
+                    <span class="function">cy</span>.<span class="method">get</span>(<span class="string">'form'</span>).<span class="method">within</span>(() => {<br>
+                    &nbsp;&nbsp;<span class="function">cy</span>.<span class="method">root</span>().<span class="method">should</span>(<span class="string">'exist'</span>);<br>
+                    });
+                </div>
+                <button class="test-btn" onclick="testRoot()">Test cy.root()</button>
+                <div id="root-result" class="result"></div>
+            </div>
         </div>
+
+        <footer>
+            <p>Cypress DOM Querying Examples | Interactive demonstration of Cypress query methods</p>
+        </footer>
     </div>
+
+    <script>
+        // Helper function to show test results
+        function showResult(elementId, message, isSuccess) {
+            const resultElement = document.getElementById(elementId);
+            resultElement.textContent = message;
+            resultElement.className = isSuccess ? 'result success-result' : 'result error-result';
+            resultElement.style.display = 'block';
+            
+            // Scroll to result
+            resultElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Test cy.get()
+        function testGet() {
+            try {
+                // Simulate cy.get('.btn')
+                const buttons = document.querySelectorAll('.btn');
+                if (buttons.length === 4) {
+                    showResult('get-result', `SUCCESS: Found ${buttons.length} buttons with cy.get('.btn')`, true);
+                } else {
+                    showResult('get-result', `ERROR: Expected 4 buttons but found ${buttons.length}`, false);
+                    return;
+                }
+                
+                // Simulate cy.get('#submit-btn')
+                const submitBtn = document.getElementById('submit-btn');
+                if (submitBtn) {
+                    showResult('get-result', 'SUCCESS: Found submit button with cy.get(\'#submit-btn\')', true);
+                } else {
+                    showResult('get-result', 'ERROR: Could not find submit button with cy.get(\'#submit-btn\')', false);
+                    return;
+                }
+                
+                // Simulate cy.get('[data-testid="username-input"]')
+                const usernameInput = document.querySelector('[data-testid="username-input"]');
+                if (usernameInput) {
+                    showResult('get-result', 'SUCCESS: Found username input with cy.get(\'[data-testid="username-input"]\')', true);
+                } else {
+                    showResult('get-result', 'ERROR: Could not find username input with cy.get(\'[data-testid="username-input"]\')', false);
+                }
+            } catch (error) {
+                showResult('get-result', `ERROR: ${error.message}`, false);
+            }
+        }
+
+        // Test cy.contains()
+        function testContains() {
+            try {
+                // Simulate cy.contains('Submit')
+                const submitElements = Array.from(document.querySelectorAll('*')).filter(el => 
+                    el.textContent.includes('Submit')
+                );
+                
+                if (submitElements.length > 0) {
+                    showResult('contains-result', `SUCCESS: Found ${submitElements.length} elements containing 'Submit' with cy.contains('Submit')`, true);
+                } else {
+                    showResult('contains-result', 'ERROR: Could not find any elements containing \'Submit\' with cy.contains(\'Submit\')', false);
+                    return;
+                }
+                
+                // Simulate cy.contains('Special Item')
+                const specialElements = Array.from(document.querySelectorAll('*')).filter(el => 
+                    el.textContent.includes('Special Item')
+                );
+                
+                if (specialElements.length > 0) {
+                    showResult('contains-result', `SUCCESS: Found ${specialElements.length} elements containing 'Special Item' with cy.contains('Special Item')`, true);
+                } else {
+                    showResult('contains-result', 'ERROR: Could not find any elements containing \'Special Item\' with cy.contains(\'Special Item\')', false);
+                    return;
+                }
+                
+                // Simulate cy.contains('.btn', 'Save')
+                const saveButtons = Array.from(document.querySelectorAll('.btn')).filter(btn => 
+                    btn.textContent.includes('Save')
+                );
+                
+                if (saveButtons.length > 0) {
+                    showResult('contains-result', `SUCCESS: Found ${saveButtons.length} buttons containing 'Save' with cy.contains('.btn', 'Save')`, true);
+                } else {
+                    showResult('contains-result', 'ERROR: Could not find any buttons containing \'Save\' with cy.contains(\'.btn\', \'Save\')', false);
+                }
+            } catch (error) {
+                showResult('contains-result', `ERROR: ${error.message}`, false);
+            }
+        }
+
+        // Test cy.find()
+        function testFind() {
+            try {
+                // Simulate cy.get('.button-group').find('.btn')
+                const buttonGroup = document.querySelector('.button-group');
+                if (buttonGroup) {
+                    const buttons = buttonGroup.querySelectorAll('.btn');
+                    if (buttons.length === 4) {
+                        showResult('find-result', `SUCCESS: Found ${buttons.length} buttons within .button-group with cy.get('.button-group').find('.btn')`, true);
+                    } else {
+                        showResult('find-result', `ERROR: Expected 4 buttons but found ${buttons.length} within .button-group`, false);
+                        return;
+                    }
+                } else {
+                    showResult('find-result', 'ERROR: Could not find .button-group element', false);
+                    return;
+                }
+                
+                // Simulate cy.get('.nested-container').find('.target-text')
+                const nestedContainer = document.querySelector('.nested-container');
+                if (nestedContainer) {
+                    const targetText = nestedContainer.querySelector('.target-text');
+                    if (targetText) {
+                        showResult('find-result', 'SUCCESS: Found .target-text within .nested-container with cy.get(\'.nested-container\').find(\'.target-text\')', true);
+                    } else {
+                        showResult('find-result', 'ERROR: Could not find .target-text within .nested-container', false);
+                    }
+                } else {
+                    showResult('find-result', 'ERROR: Could not find .nested-container element', false);
+                }
+            } catch (error) {
+                showResult('find-result', `ERROR: ${error.message}`, false);
+            }
+        }
+
+        // Test cy.root()
+        function testRoot() {
+            try {
+                // In a real Cypress test, cy.root() gets the root DOM element of the current context
+                // For this demo, we'll simulate getting the root element
+                const rootElement = document.documentElement;
+                
+                if (rootElement) {
+                    showResult('root-result', 'SUCCESS: Got root DOM element with cy.root()', true);
+                    
+                    // Demonstrate that we can find elements from the root
+                    const bodyFromRoot = rootElement.querySelector('body');
+                    if (bodyFromRoot) {
+                        showResult('root-result', 'SUCCESS: Can query elements from the root context', true);
+                    }
+                } else {
+                    showResult('root-result', 'ERROR: Could not get root DOM element', false);
+                }
+            } catch (error) {
+                showResult('root-result', `ERROR: ${error.message}`, false);
+            }
+        }
+    </script>
 </body>
 </html>
