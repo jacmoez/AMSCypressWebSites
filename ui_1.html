@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cypress Selector Examples</title>
+    <style>
+        .container { padding: 20px; margin: 10px; border: 1px solid #ccc; }
+        .btn { padding: 10px 15px; margin: 5px; border: none; cursor: pointer; }
+        .primary { background-color: #007bff; color: white; }
+        .secondary { background-color: #6c757d; color: white; }
+        .success { background-color: #28a745; color: white; }
+        .form-group { margin: 10px 0; }
+        label { display: block; margin-bottom: 5px; }
+        input { padding: 8px; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1>Welcome to Cypress Testing</h1>
+        
+        <!-- Buttons with different classes and text -->
+        <div class="button-group">
+            <button class="btn primary" id="submit-btn">Submit</button>
+            <button class="btn secondary">Cancel</button>
+            <button class="btn success">Save Changes</button>
+            <button class="btn">Save</button>
+        </div>
+
+        <!-- Form elements -->
+        <div class="form-container">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" data-testid="username-input">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+        </div>
+
+        <!-- List of items -->
+        <ul class="item-list">
+            <li class="item" data-id="1">Item 1</li>
+            <li class="item" data-id="2">Item 2</li>
+            <li class="item special" data-id="3">Special Item</li>
+            <li class="item" data-id="4">Item 4</li>
+        </ul>
+
+        <!-- Nested elements -->
+        <div class="nested-container">
+            <div class="level-1">
+                <div class="level-2">
+                    <span class="target-text">Find me!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
