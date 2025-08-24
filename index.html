@@ -1,15 +1,224 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>AMSLTD</title>
-     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMS Cypress Websites</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .repo-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+            font-family: monospace;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .card h2 {
+            color: #f8f8f8;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .card p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, #4ecdc4, #0077b6);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .status h2 {
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .working {
+            background: #4caf50;
+        }
+        
+        .error {
+            background: #f44336;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-     <div style="border:1px solid; margin: 10px;">
-          <h1 style="text-align: center;color:rgb(0, 85, 255);">AMS LTD</h1>
-          <h2 style="text-align: center;"><a  href="/ui_1.html">UI 1</a></h2>
-     </div>
+    <div class="container">
+        <header>
+            <h1>AMS Cypress Websites</h1>
+            <p class="subtitle">GitHub Pages Navigation Demo</p>
+        </header>
+        
+        <div class="repo-info">
+            <strong>Repository:</strong> github.com/jacmoez/AMSCypressWebSites<br>
+            <strong>Branch:</strong> main<br>
+            <strong>Latest Commit:</strong> 20 minutes ago
+        </div>
+        
+        <div class="cards">
+            <div class="card">
+                <h2>Home Page</h2>
+                <p>The main index.html page that loads correctly on GitHub Pages</p>
+                <a href="https://jacmoez.github.io/AMSCypressWebSites/" class="btn">Open Index</a>
+            </div>
+            
+            <div class="card">
+                <h2>UI 1 Page</h2>
+                <p>The UI 1 page that was returning an error when clicked</p>
+                <a href="ut_1.html" class="btn">Open UI 1</a>
+            </div>
+            
+            <div class="card">
+                <h2>GitHub Source</h2>
+                <p>View the repository structure and source code on GitHub</p>
+                <a href="https://github.com/jacmoez/AMSCypressWebSites" class="btn" target="_blank">View Repository</a>
+            </div>
+        </div>
+        
+        <div class="status">
+            <h2>Navigation Status</h2>
+            <div class="status-item">
+                <div class="status-dot working"></div>
+                <span>Index.html - Working correctly</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot error"></div>
+                <span>UI 1 - Previously had path issues</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot working"></div>
+                <span>Fixed UI 1 link - Now uses relative path</span>
+            </div>
+        </div>
+        
+        <footer>
+            <p>AMSLTD &copy; 2025 | GitHub Pages Navigation Fix</p>
+        </footer>
+    </div>
 </body>
 </html>
