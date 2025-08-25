@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopHub - Online Shopping</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">ShopHub</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="deals.html">Deals</a></li>
+          <li><a href="about.html">About</a></li>
+          <li>
+            <a href="cart.html" class="cart-icon">
+              Cart <span class="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to ShopHub</h1>
+      <p>Your one-stop destination for all your shopping needs</p>
+      <a href="products.html" class="btn">Shop Now</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="section">
+      <h2>Featured Products</h2>
+      <div id="featured-products" class="card-container"></div>
+    </section>
+
+    <section class="section">
+      <h2>Shop by Category</h2>
+      <div class="card-container">
+        <div class="card">
+          <div class="card-content">
+            <h2>📱</h2>
+            <h3>Electronics</h3>
+            <a href="products.html?category=electronics" class="btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>👕</h2>
+            <h3>Clothing</h3>
+            <a href="products.html?category=clothing" class="btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>🏠</h2>
+            <h3>Home & Kitchen</h3>
+            <a href="products.html?category=home" class="btn">Shop Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>🕶️</h2>
+            <h3>Accessories</h3>
+            <a href="products.html?category=accessories" class="btn">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 ShopHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
