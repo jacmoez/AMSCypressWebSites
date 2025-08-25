@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cypress Actions Examples</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .btn { padding: 10px 15px; margin: 5px; border: 1px solid #ccc; background: #f0f0f0; cursor: pointer; }
+        .btn:hover { background: #e0e0e0; }
+        .primary { background: #007bff; color: white; border-color: #0056b3; }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { padding: 8px; width: 100%; border: 1px solid #ccc; border-radius: 4px; }
+        .checkbox-group, .radio-group { margin: 10px 0; }
+        .hover-area { padding: 20px; background: #e8f4f8; border: 2px dashed #007bff; margin: 10px 0; }
+        .hover-text { color: #007bff; font-weight: bold; }
+        .focused { border-color: red !important; box-shadow: 0 0 5px red; }
+        .notification { padding: 10px; margin: 10px 0; background: #d4edda; border: 1px solid #c3e6cb; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cypress Actions Testing</h1>
+        <div>
+               <p>cy.click() – Click an element.</p>
+                <p>cy.type(text) – Type into an input field.</p>
+                <p>cy.clear() – Clear input/textarea values.</p>
+                <p>cy.check() – Check a checkbox/radio.</p>
+                <p>cy.uncheck() – Uncheck a checkbox.</p>
+                <p>cy.select(option) – Select an option from a select dropdown.</p>
+                <p>cy.trigger(event) – Trigger DOM events (e.g., mouseover).</p>
+                <p>cy.focus() / cy.blur() – Focus or blur an element.</p>
+                <p>cy.submit() – Submit a form.</p>
+        </div>
+        <!-- Click Examples -->
+        <div class="section">
+            <h2>Click Actions</h2>
+            <button id="click-btn" class="btn primary">Click Me</button>
+            <button class="btn" onclick="alert('Button clicked!')">Alert Button</button>
+            <div id="click-result" style="display:none; color:green; margin-top:10px;">
+                Button was clicked successfully!
+            </div>
+        </div>
+
+        <!-- Type and Clear Examples -->
+        <div class="section">
+            <h2>Type and Clear Actions</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="prefilled@example.com">
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio (textarea):</label>
+                <textarea id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
+            </div>
+        </div>
+
+        <!-- Checkbox and Radio Examples -->
+        <div class="section">
+            <h2>Checkbox and Radio Actions</h2>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="agree-terms"> I agree to the terms
+                </label>
+                <label>
+                    <input type="checkbox" id="newsletter" checked> Subscribe to newsletter
+                </label>
+                <label>
+                    <input type="checkbox" id="notifications"> Enable notifications
+                </label>
+            </div>
+
+            <div class="radio-group">
+                <label>Gender:</label>
+                <label>
+                    <input type="radio" name="gender" value="male"> Male
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female"> Female
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="other" checked> Other
+                </label>
+            </div>
+        </div>
+
+        <!-- Select Dropdown Examples -->
+        <div class="section">
+            <h2>Select Dropdown Actions</h2>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country">
+                    <option value="">Select a country</option>
+                    <option value="us">United States</option>
+                    <option value="ca" selected>Canada</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="au">Australia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="colors">Favorite Color (multiple):</label>
+                <select id="colors" multiple>
+                    <option value="red">Red</option>
+                    <option value="blue" selected>Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Trigger Events Examples -->
+        <div class="section">
+            <h2>Event Triggering</h2>
+            <div class="hover-area" id="hover-target">
+                Hover over me to see effect
+                <div class="hover-text" style="display:none;">Hover detected!</div>
+            </div>
+            
+            <input type="text" id="key-events" placeholder="Type for key events">
+            <div id="key-log"></div>
+        </div>
+
+        <!-- Focus and Blur Examples -->
+        <div class="section">
+            <h2>Focus and Blur Actions</h2>
+            <div class="form-group">
+                <label for="focus-input">Focus Test:</label>
+                <input type="text" id="focus-input" placeholder="Focus and blur me">
+                <span id="focus-status" style="color: blue; display: none;">Focused!</span>
+                <span id="blur-status" style="color: red; display: none;">Blurred!</span>
+            </div>
+        </div>
+
+        <!-- Form Submit Examples -->
+        <div class="section">
+            <h2>Form Submit Actions</h2>
+            <form id="test-form">
+                <div class="form-group">
+                    <label for="form-name">Name:</label>
+                    <input type="text" id="form-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="form-email">Email:</label>
+                    <input type="email" id="form-email" name="email" required>
+                </div>
+                <button type="submit" class="btn primary">Submit Form</button>
+            </form>
+            <div id="form-result" class="notification"></div>
+        </div>
+    </div>
+
+    <script>
+        // Click handler
+        document.getElementById('click-btn').addEventListener('click', function() {
+            document.getElementById('click-result').style.display = 'block';
+        });
+
+        // Hover handlers
+        const hoverTarget = document.getElementById('hover-target');
+        const hoverText = hoverTarget.querySelector('.hover-text');
+        
+        hoverTarget.addEventListener('mouseover', function() {
+            hoverText.style.display = 'block';
+            this.style.background = '#d4e8f0';
+        });
+        
+        hoverTarget.addEventListener('mouseout', function() {
+            hoverText.style.display = 'none';
+            this.style.background = '#e8f4f8';
+        });
+
+        // Key events handler
+        document.getElementById('key-events').addEventListener('keydown', function(e) {
+            document.getElementById('key-log').textContent = `Key pressed: ${e.key}`;
+        });
+
+        // Focus/blur handlers
+        const focusInput = document.getElementById('focus-input');
+        focusInput.addEventListener('focus', function() {
+            document.getElementById('focus-status').style.display = 'inline';
+            document.getElementById('blur-status').style.display = 'none';
+        });
+        
+        focusInput.addEventListener('blur', function() {
+            document.getElementById('focus-status').style.display = 'none';
+            document.getElementById('blur-status').style.display = 'inline';
+        });
+
+        // Form submit handler
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+            
+            document.getElementById('form-result').textContent = 
+                `Form submitted! Name: ${name}, Email: ${email}`;
+            document.getElementById('form-result').style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                document.getElementById('form-result').style.display = 'none';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
