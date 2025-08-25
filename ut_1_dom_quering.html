@@ -1,237 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM Querying Examples</title>
+    <title>DOM Querying Test Page</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .section { margin: 30px 0; padding: 20px; border: 2px solid #e0e0e0; }
-        .btn { padding: 10px 15px; margin: 5px; border: 1px solid #007bff; background: #f8f9fa; cursor: pointer; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .nested { padding: 15px; background: #f8f9fa; margin: 10px 0; }
-        .user-card { border: 1px solid #ddd; padding: 15px; margin: 10px; background: #fff; }
-        .hidden { display: none; }
-        .visible { display: block; }
-        #shadow-host { margin: 20px 0; padding: 15px; border: 2px dashed #007bff; }
-        .data-testid { border: 1px solid green; padding: 5px; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .notification {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <h1>DOM Querying Test Page</h1>
         <h1 data-testid="main-title">DOM Querying Examples</h1>
+        <h3>1. Querying DOM Elements</h3>
+        <p>cy.get(selector) – Select DOM elements by CSS selector, XPath, or alias.</p>
+        <p>cy.contains(content) – Find elements containing specific text.</p>
+        <p>cy.contains('Submit')</p>
+        <p>cy.contains('.btn', 'Save') (scoped within an element)</p>
+        <p>cy.find(selector) – Find descendant elements within a parent.</p>
+        <p>cy.root() – Get the root DOM element (useful in shadow DOM).</p>
 
-        <!-- cy.get() Examples Section -->
-        <div class="section" id="get-section">
-            
-            <div class="btn-group">
-                <button class="btn btn-primary" id="submit-btn">Submit Form</button>
-                <button class="btn btn-success">Save Changes</button>
-                <button class="btn btn-danger">Delete Item</button>
-                <button class="btn">Cancel</button>
-            </div>
 
+        <div class="card">
+            <h2>User Information</h2>
             <div class="form-group">
-                <input type="text" id="username" placeholder="Username" data-testid="username-input">
-                <input type="email" id="email" placeholder="Email">
-                <textarea id="message" placeholder="Your message"></textarea>
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
             </div>
-
-            <ul class="item-list">
-                <li class="item" data-id="1">Item One</li>
-                <li class="item special" data-id="2">Item Two (Special)</li>
-                <li class="item" data-id="3">Item Three</li>
-                <li class="item" data-id="4">Item Four</li>
-            </ul>
-
-            <div class="attributes-example">
-                <div data-role="admin" data-status="active" class="user-card">Admin User</div>
-                <div data-role="user" data-status="inactive" class="user-card">Regular User</div>
-                <div data-role="guest" class="user-card">Guest User</div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email">
             </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role">
+                    <option value="">Select a role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button id="save-btn" class="btn">Save</button>
+            <button id="submit-btn" class="btn">Submit</button>
         </div>
 
-        <!-- cy.contains() Examples Section -->
-        <div class="section" id="contains-section">
-            
-            <div class="text-content">
-                <p>This paragraph contains important information about the application.</p>
-                <p>Please read the terms and conditions before proceeding.</p>
-                <p class="warning-text">Warning: This action cannot be undone!</p>
-                <p class="success-text">Success! Your changes have been saved.</p>
-            </div>
-
-            <div class="button-container">
-                <button class="btn">Save Draft</button>
-                <button class="btn btn-primary">Submit Application</button>
-                <button class="btn btn-danger">Delete Forever</button>
-                <button class="btn">Cancel Operation</button>
-            </div>
-
-            <div class="nested-text">
-                <div class="level-1">
-                    <div class="level-2">
-                        <span class="target-text">Find this specific text</span>
-                    </div>
-                </div>
-                <div class="duplicate-text">
-                    <p>Duplicate text here</p>
-                    <p>Duplicate text here</p>
-                </div>
-            </div>
+        <div id="notifications" class="card">
+            <h2>Notifications</h2>
+            <div id="notification-area"></div>
         </div>
 
-        <!-- cy.find() Examples Section -->
-        <div class="section" id="find-section">
-            
-            <div class="parent-container" data-testid="main-parent">
-                <div class="child-element">First Child</div>
-                <div class="child-element special">Second Child (Special)</div>
-                <div class="child-element">
-                    Third Child with <span class="nested-span">nested content</span>
-                </div>
+        <div id="products" class="card">
+            <h2>Products</h2>
+            <div class="product-item">
+                <h3>Product 1</h3>
+                <p>This is the first product</p>
+                <button class="add-to-cart">Add to Cart</button>
             </div>
-
-            <div class="user-list">
-                <div class="user-item">
-                    <h3>John Doe</h3>
-                    <p class="user-email">john@example.com</p>
-                    <span class="user-role">Admin</span>
-                </div>
-                <div class="user-item">
-                    <h3>Jane Smith</h3>
-                    <p class="user-email">jane@example.com</p>
-                    <span class="user-role">User</span>
-                </div>
-                <div class="user-item">
-                    <h3>Bob Johnson</h3>
-                    <p class="user-email">bob@example.com</p>
-                    <span class="user-role">Guest</span>
-                </div>
-            </div>
-
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Project Alpha</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr class="highlighted">
-                        <td>2</td>
-                        <td>Project Beta</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Project Gamma</td>
-                        <td>Pending</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- cy.root() Examples Section (Shadow DOM) -->
-        <div class="section" id="root-section">
-            
-            <div id="shadow-host">
-                <p>This is light DOM content</p>
-            </div>
-
-            <div id="simple-root">
-                <div class="content">Regular DOM content for root testing</div>
-            </div>
-        </div>
-
-        <!-- Complex Nested Structure -->
-        <div class="section" id="complex-section">
-            <h2>Complex Nested Structure</h2>
-            
-            <div class="main-wrapper">
-                <header class="main-header">
-                    <nav class="main-nav">
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </nav>
-                </header>
-                
-                <main class="main-content">
-                    <article class="blog-post">
-                        <h3>Blog Post Title</h3>
-                        <p class="post-content">This is the blog post content with <span class="highlight">important points</span>.</p>
-                        <div class="post-meta">
-                            <span class="author">By John Doe</span>
-                            <span class="date">August 22, 2025</span>
-                        </div>
-                    </article>
-                    
-                    <aside class="sidebar">
-                        <div class="widget">
-                            <h4>Recent Posts</h4>
-                            <ul>
-                                <li>Post One</li>
-                                <li>Post Two</li>
-                                <li>Post Three</li>
-                            </ul>
-                        </div>
-                    </aside>
-                </main>
-            </div>
-        </div>
-
-        <!-- Dynamic Content -->
-        <div class="section">
-            <h2>Dynamic Content</h2>
-            <div id="dynamic-content">
-                <button id="load-content" class="btn">Load Content</button>
-                <div id="content-area"></div>
+            <div class="product-item">
+                <h3>Product 2</h3>
+                <p>This is the second product</p>
+                <button class="add-to-cart">Add to Cart</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Create Shadow DOM for testing
-        const shadowHost = document.getElementById('shadow-host');
-        const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <style>
-                .shadow-content { padding: 15px; background: #e8f4f8; }
-                .shadow-btn { padding: 10px; background: #007bff; color: white; border: none; margin: 5px; }
-            </style>
-            <div class="shadow-content">
-                <h3>Shadow DOM Content</h3>
-                <button class="shadow-btn">Shadow Button</button>
-                <p>This content is inside the shadow DOM</p>
-                <div class="nested-shadow">
-                    <span>Nested shadow content</span>
-                </div>
-            </div>
-        `;
+        document.getElementById('save-btn').addEventListener('click', function () {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
 
-        // Dynamic content loading
-        document.getElementById('load-content').addEventListener('click', function() {
-            const contentArea = document.getElementById('content-area');
-            contentArea.innerHTML = `
-                <div class="loaded-content">
-                    <h4>Dynamically Loaded Content</h4>
-                    <p>This content was loaded dynamically at ${new Date().toLocaleTimeString()}</p>
-                    <button class="btn">Action Button</button>
-                </div>
-            `;
+            if (!name || !email) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+
+            showNotification('Information saved successfully!', 'success');
         });
+
+        document.getElementById('submit-btn').addEventListener('click', function () {
+            const role = document.getElementById('role').value;
+
+            if (!role) {
+                showNotification('Please select a role', 'error');
+                return;
+            }
+
+            showNotification('Form submitted successfully!', 'success');
+        });
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function () {
+                const productName = this.parentElement.querySelector('h3').textContent;
+                showNotification(`${productName} added to cart!`, 'success');
+            });
+        });
+
+        function showNotification(message, type) {
+            const notificationArea = document.getElementById('notification-area');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+
+            notificationArea.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
     </script>
 </body>
+
 </html>
