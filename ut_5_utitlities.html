@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cypress Utilities Demo</title>
+  <style>
+    #textBox { font-size: 16px; color: #2c3e50; }
+  </style>
+</head>
+<body>
+  <h1>Utilities Demo</h1>
+
+  <div id="textBox">Hello, Cypress!</div>
+  <button id="btn" onclick="document.getElementById('textBox').style.color = 'red'">
+    Change Color
+  </button>
+
+  <script>
+    window.myApp = {
+      user: {
+        name: 'Alice',
+        age: 30
+      },
+      getGreeting: () => 'Welcome to Cypress!'
+    };
+  </script>
+</body>
+</html>

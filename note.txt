@@ -1,0 +1,99 @@
+1. Querying DOM Elements
+cy.get(selector) – Select DOM elements by CSS selector, XPath, or alias.
+
+cy.contains(content) – Find elements containing specific text.
+
+cy.contains('Submit')
+
+cy.contains('.btn', 'Save') (scoped within an element)
+
+cy.find(selector) – Find descendant elements within a parent.
+
+cy.root() – Get the root DOM element (useful in shadow DOM).
+
+2. Actions (Interacting with Elements)
+cy.click() – Click an element.
+
+cy.type(text) – Type into an input field.
+
+cy.clear() – Clear input/textarea values.
+
+cy.check() – Check a checkbox/radio.
+
+cy.uncheck() – Uncheck a checkbox.
+
+cy.select(option) – Select an <option> from a <select> dropdown.
+
+cy.trigger(event) – Trigger DOM events (e.g., mouseover).
+
+cy.focus() / cy.blur() – Focus or blur an element.
+
+cy.submit() – Submit a form.
+
+3. Navigation
+cy.visit(url) – Load a page.
+
+cy.reload() – Reload the page.
+
+cy.go('back') / cy.go('forward') – Navigate browser history.
+
+cy.wait(ms) – Pause execution (avoid unless necessary).
+
+4. Assertions
+cy.should(assertion) – Assert on element states:
+
+cy.get('button').should('be.disabled')
+
+cy.get('.list').should('have.length', 3)
+
+cy.assert() (less common, usually should is preferred).
+
+Common assertions:
+exist, be.visible, have.text, include.text, have.class, have.value, etc.
+
+5. Utilities
+cy.wrap(value) – Wrap a value for Cypress commands (e.g., cy.wrap(42).should('eq', 42)).
+
+cy.invoke(methodName) – Invoke a jQuery method on an element.
+
+cy.its(property) – Get a property from the subject (e.g., cy.wrap({ age: 30 }).its('age')).
+
+cy.then(callback) – Work with promises/resolved values.
+
+cy.log(message) – Print logs in the Cypress runner.
+
+6. Network Requests
+cy.intercept() – Stub/mock HTTP requests (replaces cy.route() in newer versions).
+
+cy.request() – Make HTTP requests (e.g., API testing).
+
+cy.wait('@alias') – Wait for a specific network call.
+
+7. File Operations
+cy.readFile(path) – Read a file.
+
+cy.writeFile(path, data) – Write to a file.
+
+cy.fixture(file) – Load test data from a fixture (e.g., cy.fixture('users.json')).
+
+8. Screenshots & Debugging
+cy.screenshot() – Take a screenshot.
+
+cy.pause() – Pause test execution (debugging).
+
+cy.debug() – Debug the current subject.
+
+9. Aliasing & Variables
+cy.as(alias) – Alias elements or values for reuse:
+
+javascript
+cy.get('.user').as('userEl');
+cy.get('@userEl').click();
+10. Commands for Specific Scenarios
+cy.scrollTo(position) – Scroll the page/element.
+
+cy.rightclick() – Right-click an element.
+
+cy.selectFile() – Upload files.
+
+cy.window() / cy.document() – Access window or document objects.
